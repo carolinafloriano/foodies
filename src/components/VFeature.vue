@@ -1,5 +1,10 @@
 <template>
-  <div class="feature-item">
+  <div
+    class="feature-item"
+    :class="{
+      '-invert': invert,
+    }"
+  >
     <img class="photo" :src="photo" />
     <div class="information">
       <h1 class="headline">
@@ -26,6 +31,10 @@ export default {
       type: String,
       required: true,
     },
+    invert: {
+      type: Boolean,
+      required: false,
+    },
   },
 };
 </script>
@@ -50,7 +59,8 @@ export default {
     row-gap: 30px;
     text-align: left;
     background-color: #f0f1ec;
-    border: 2px solid map-get($colors, "primary");
+    border: 1px solid map-get($colors, "primary");
+    box-sizing: border-box;
 
     > .headline {
       font-weight: 500;
@@ -62,6 +72,29 @@ export default {
       font-weight: 400;
       font-size: 16px;
       line-height: 19px;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .feature-item {
+    flex-direction: row;
+
+    > .photo {
+      flex: 1;
+      width: 310px;
+      height: 310px;
+    }
+
+    > .information {
+      flex: 1;
+      width: 310px;
+      height: 310px;
+      padding: 50px 20px 50px 40px;
+      box-sizing: border-box;
+    }
+
+    &.-invert {
+      flex-direction: row-reverse;
     }
   }
 }

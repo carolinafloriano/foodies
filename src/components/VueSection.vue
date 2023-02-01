@@ -1,5 +1,13 @@
 <template>
-  <section class="vue-section" :class="{ '-before': imageBefore }">
+  <section
+    class="vue-section"
+    :class="{
+      '-before': imageBefore,
+      '-after': imageAfter,
+      '-backgroundImage': showImageBackground,
+      '-desktopView': desktopView,
+    }"
+  >
     <div class="call-to-action" v-if="showCallToAction">
       <h2 class="subtitle">
         <slot name="subtitle"></slot>
@@ -7,10 +15,10 @@
       <h1 class="title" :class="{ '-large': titleLarge }">
         <slot name="title"></slot>
       </h1>
-      <p class="description">
+      <p class="description" v-if="showDescription">
         <slot name="description"></slot>
       </p>
-      <div class="action">
+      <div class="action" v-if="showAction">
         <slot name="action"></slot>
       </div>
     </div>
@@ -59,11 +67,27 @@ export default {
       type: Boolean,
       required: false,
     },
+    showDescription: {
+      type: Boolean,
+      required: false,
+    },
+    showAction: {
+      type: Boolean,
+      required: false,
+    },
     showDivisor: {
       type: Boolean,
       required: false,
     },
+    desktopView: {
+      type: Boolean,
+      required: false,
+    },
     imageBefore: {
+      type: Boolean,
+      required: false,
+    },
+    imageAfter: {
       type: Boolean,
       required: false,
     },
@@ -95,6 +119,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    showImageBackground: {
+      type: Boolean,
+      required: false,
+    },
   },
 };
 </script>
@@ -105,24 +133,36 @@ export default {
 .vue-section {
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
-  align-items: center;
+  gap: 15px;
   justify-content: center;
   text-align: center;
-  margin-top: 30px;
+  align-items: center;
+  padding: 25px;
 
   &.-before {
-    .image {
+    > .image {
       order: 10;
     }
-    .call-to-action {
+    > .call-to-action {
       order: 20;
     }
-    .content {
+    > .content {
       order: 30;
     }
-    .divisor {
+    > .divisor {
       order: 40;
+    }
+  }
+
+  &.-backgroundImage {
+    background: url("@/assets/images/others/rectangle.png") center no-repeat;
+    background-size: cover;
+    padding: 100px 60px;
+
+    > .call-to-action {
+      > .title {
+        color: #f0f1ec;
+      }
     }
   }
 
@@ -130,42 +170,45 @@ export default {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    align-items: center;
     justify-content: center;
     text-align: center;
+    align-items: center;
     order: 1;
     margin-top: 15px;
-    width: 90%;
     color: #1d1d1f;
-  }
 
-  .subtitle {
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 18px;
-  }
+    > .subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 18px;
+    }
 
-  .title {
-    font-weight: 500;
-    font-size: 35px;
-    line-height: 42px;
-    text-align: center;
+    > .title {
+      font-weight: 500;
+      font-size: 35px;
+      line-height: 42px;
 
-    &.-large {
-      font-weight: 600;
-      font-size: 51px;
-      line-height: 62px;
+      &.-large {
+        font-weight: 600;
+        font-size: 51px;
+        line-height: 62px;
+      }
+    }
+
+    > .description {
+      width: 100%;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 159.4%;
+    }
+
+    > .action {
+      width: 100%;
+      margin-top: 30px;
     }
   }
 
-  .description {
-    width: 100%;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 159.4%;
-  }
-
-  .image {
+  > .image {
     margin-top: 30px;
     order: 10;
 
@@ -174,7 +217,7 @@ export default {
     }
 
     &.-small {
-      width: 90%;
+      width: 100%;
       background: #f0f1ec;
 
       img {
@@ -186,22 +229,22 @@ export default {
       width: 88%;
     }
     &.-large {
-      width: 93%;
+      width: 100%;
     }
   }
 
-  .content {
+  > .content {
     &.-flex {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      row-gap: 30px;
-      justify-content: space-around;
-      margin-top: 20px;
+      column-gap: 15px;
+      row-gap: 40px;
       order: 20;
     }
 
     &.-chart {
+      row-gap: 0;
     }
 
     &.-smallImage {
@@ -209,15 +252,131 @@ export default {
     }
   }
 
-  .action {
-    width: 100%;
-    margin-top: 30px;
-  }
-
-  .divisor {
+  > .divisor {
     width: 100%;
     margin-top: 35px;
     order: 30;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .vue-section {
+    &.-desktopView {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 50px;
+      padding: 50px 150px;
+      box-sizing: border-box;
+    }
+
+    > .call-to-action {
+      align-items: flex-start;
+      justify-content: left;
+      text-align: left;
+
+      > .action {
+        flex: auto;
+        width: 40%;
+      }
+    }
+
+    &.-backgroundImage {
+      background-size: auto;
+
+      > .call-to-action {
+        > .action {
+          width: 30%;
+        }
+      }
+    }
+
+    .content {
+      width: 100%;
+      box-sizing: border-box;
+
+      &.-flex {
+        flex-direction: row;
+        flex-wrap: initial;
+        gap: 40px;
+        justify-content: space-around;
+      }
+
+      &.-chart {
+        flex-wrap: wrap;
+        gap: 0;
+        justify-content: center;
+      }
+    }
+
+    &.-before {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 100px;
+
+      > .call-to-action {
+        align-items: initial;
+
+        > .description {
+          > .stars-list {
+            display: flex;
+            flex-direction: row;
+            gap: 80px;
+            justify-content: baseline;
+          }
+
+          > .item-list {
+            margin-left: 0;
+          }
+        }
+
+        > .action {
+          flex: auto;
+        }
+      }
+    }
+
+    &.-after {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 100px;
+
+      > .image {
+        order: 40;
+        box-sizing: border-box;
+
+        &.-small {
+          width: 450px;
+        }
+      }
+      > .call-to-action {
+        align-items: initial;
+        order: 10;
+
+        > .description {
+          > .stars-list {
+            display: flex;
+            flex-direction: row;
+            gap: 80px;
+            justify-content: baseline;
+          }
+        }
+
+        > .action {
+          flex: auto;
+        }
+      }
+      > .content {
+        order: 20;
+      }
+      > .divisor {
+        order: 30;
+      }
+    }
   }
 }
 

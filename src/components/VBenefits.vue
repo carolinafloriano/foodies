@@ -3,12 +3,14 @@
     <div class="menu">
       <span class="material-icons"> <slot name="icon"></slot> </span>
     </div>
-    <h1 class="title">
-      <slot name="title"></slot>
-    </h1>
-    <h2 class="subtitle">
-      <slot name="subtitle"></slot>
-    </h2>
+    <div class="content">
+      <h1 class="title">
+        <slot name="title"></slot>
+      </h1>
+      <h2 class="subtitle">
+        <slot name="subtitle"></slot>
+      </h2>
+    </div>
   </div>
 </template>
 <script>
@@ -22,28 +24,17 @@ export default {
 .benefit {
   display: flex;
   flex-direction: column;
+  flex-basis: 45%;
+  flex-wrap: wrap;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
-  row-gap: 5px;
+  gap: 10px;
   font-family: "Inter";
   font-style: normal;
   color: #1d1d1f;
 
-  .title {
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 22px;
-  }
-
-  .subtitle {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    opacity: 0.75;
-  }
-
-  .menu {
+  > .menu {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,11 +42,38 @@ export default {
     height: 70px;
     background: #f3fcf7;
     border-radius: 10px;
+
+    > .material-icons {
+      color: map-get($colors, "primary");
+      font-size: 35px;
+    }
   }
 
-  .material-icons {
-    color: map-get($colors, "primary");
-    font-size: 35px;
+  > .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    > .title {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    > .subtitle {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 17px;
+      opacity: 0.75;
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .benefit {
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
 }
 </style>

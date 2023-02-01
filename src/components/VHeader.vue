@@ -1,8 +1,17 @@
 <template>
   <header class="foodies-header">
     <div class="title">Foodies</div>
-    <div class="menu">
+    <div class="mobile-menu">
       <span class="material-icons">menu</span>
+    </div>
+    <div class="menu">
+      <ul class="list">
+        <li class="link active">Home</li>
+        <li class="link">About Us</li>
+        <li class="link">Service Us</li>
+        <li class="link">Our Company</li>
+        <li class="link">Pages</li>
+      </ul>
     </div>
   </header>
 </template>
@@ -29,7 +38,7 @@
     font-weight: 500;
   }
 
-  > .menu {
+  > .mobile-menu {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,8 +49,55 @@
     border: 2px solid map-get($colors, "primary");
   }
 
-  > .menu > .material-icons {
+  > .mobile-menu > .material-icons {
     font-size: 38px;
+  }
+
+  > .menu {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .foodies-header {
+    > .mobile-menu {
+      display: none;
+    }
+
+    > .menu {
+      display: initial;
+      padding-right: 70px;
+
+      > .list {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #1d1d1f;
+
+        > .link {
+          cursor: pointer;
+        }
+
+        > .active {
+          color: map-get($colors, "primary");
+        }
+
+        > .active::after {
+          content: " ";
+          display: inline-block;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: map-get($colors, "primary");
+          position: relative;
+          right: 50%;
+          top: 15px;
+        }
+      }
+    }
   }
 }
 

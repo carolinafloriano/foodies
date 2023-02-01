@@ -6,11 +6,13 @@
         show-call-to-action
         show-image
         show-content
+        show-description
+        show-action
         show-divisor
         title-large
         large-image
         content-flex
-        small-image
+        desktop-view
       >
         <template #title>We're Serious For Food</template>
         <template #description
@@ -51,7 +53,13 @@
           </VBenefits>
         </template>
       </VueSection>
-      <VueSection show-call-to-action show-image image-before small-image>
+      <VueSection
+        show-call-to-action
+        show-image
+        show-description
+        image-before
+        small-image
+      >
         <template #subtitle>Our Benefit</template>
         <template #title>The More Healthy Food The Better</template>
         <template #description>
@@ -59,7 +67,14 @@
         </template>
         <template #image><img :src="imgFoodies01" /></template>
       </VueSection>
-      <VueSection show-call-to-action show-image image-before small-image>
+      <VueSection
+        show-call-to-action
+        show-image
+        show-description
+        show-action
+        image-after
+        small-image
+      >
         <template #subtitle>Ours Stars</template>
         <template #title>Veggie Food Goes On And Always On</template>
         <template #description
@@ -70,7 +85,7 @@
           <VButton primary large> Get Special Promo </VButton></template
         >
       </VueSection>
-      <VueSection show-call-to-action show-content content-flex>
+      <VueSection show-call-to-action show-content content-flex content-chart>
         <template #subtitle>Ours Features</template>
         <template #title>Variety Of Veggie Foods</template>
         <template #content>
@@ -78,12 +93,58 @@
             <template #headline>Veggies Are Forever</template>
             <template #details>We offer the following services</template>
           </VFeature>
-          <VFeature :photo="imgFoodies03">
-            <template #headline>Veggies Are Forever</template>
+          <VFeature :photo="imgFoodies04">
+            <template #headline>Good For Your Skin</template>
+            <template #details>We offer the following services</template>
+          </VFeature>
+          <VFeature :photo="imgFoodies05" invert>
+            <template #headline>Veggie Food Grove</template>
+            <template #details>We offer the following services</template>
+          </VFeature>
+          <VFeature :photo="imgFoodies06" invert>
+            <template #headline>That Comes Close</template>
             <template #details>We offer the following services</template>
           </VFeature>
         </template>
       </VueSection>
+      <VueSection show-call-to-action show-content content-flex>
+        <template #subtitle>Our Product</template>
+        <template #title>Most Popular Product</template>
+        <template #content>
+          <VProduct
+            :image="imgBanana"
+            value="29"
+            promotion="25"
+            name="Summer Veganie"
+            contrast-product
+          ></VProduct>
+          <VProduct
+            :image="imgPapaya"
+            value="29"
+            promotion="25"
+            name="Greanie Seafood"
+          ></VProduct>
+          <VProduct
+            :image="imgAvocado"
+            value="29"
+            promotion="25"
+            name="Fresh Vegetable"
+          ></VProduct>
+          <VProduct
+            :image="imgTangerine"
+            value="29"
+            promotion="25"
+            name="Fresh Meatyus"
+          ></VProduct>
+        </template>
+      </VueSection>
+      <VueSection show-call-to-action show-action show-image-background>
+        <template #title>Veggie Foods? Ingredients You Want To Try</template>
+        <template #action>
+          <VButton primary large> Get Started </VButton></template
+        >
+      </VueSection>
+      <VFooter></VFooter>
     </div>
   </div>
 </template>
@@ -96,14 +157,24 @@ import VBenefits from "@/components/VBenefits.vue";
 import VItemList from "@/components/VItemList.vue";
 import VItemStars from "@/components/VStarsList.vue";
 import VFeature from "@/components/VFeature.vue";
+import VProduct from "@/components/VProduct.vue";
+import VFooter from "@/components/VFooter.vue";
 
 import woman from "@/assets/images/others/woman.png";
 import logo1 from "@/assets/images/logos/logo-01.png";
 import logo2 from "@/assets/images/logos/logo-02.png";
 import logo3 from "@/assets/images/logos/logo-03.png";
 import foodies_01 from "@/assets/images/foodies/foodies_01.png";
+import foodies_01_desktop from "@/assets/images/foodies/foodies_01_desktop.png";
 import foodies_02 from "@/assets/images/foodies/foodies_02.png";
 import foodies_03 from "@/assets/images/foodies/foodies_03.png";
+import foodies_04 from "@/assets/images/foodies/foodies_04.png";
+import foodies_05 from "@/assets/images/foodies/foodies_05.png";
+import foodies_06 from "@/assets/images/foodies/foodies_06.png";
+import fruit_banana from "@/assets/images/foodies/fruit_banana.png";
+import fruit_papaya from "@/assets/images/foodies/fruit_papaya.png";
+import fruit_avocado from "@/assets/images/foodies/fruit_avocado.png";
+import fruit_tangerine from "@/assets/images/foodies/fruit_tangerine.png";
 
 export default {
   name: "App",
@@ -115,6 +186,8 @@ export default {
     VItemList,
     VItemStars,
     VFeature,
+    VProduct,
+    VFooter,
   },
 
   data() {
@@ -123,9 +196,17 @@ export default {
       imgLogo01: logo1,
       imgLogo02: logo2,
       imgLogo03: logo3,
-      imgFoodies01: foodies_01,
+      imageFoodies01: foodies_01,
+      imageFoodies01_desktop: foodies_01_desktop,
       imgFoodies02: foodies_02,
       imgFoodies03: foodies_03,
+      imgFoodies04: foodies_04,
+      imgFoodies05: foodies_05,
+      imgFoodies06: foodies_06,
+      imgBanana: fruit_banana,
+      imgPapaya: fruit_papaya,
+      imgAvocado: fruit_avocado,
+      imgTangerine: fruit_tangerine,
 
       itens01: [
         "Be Alive With Healthy Food",
@@ -139,7 +220,25 @@ export default {
         { number: "500", name: "Positive Feedback" },
         { number: "400", name: "Official Store" },
       ],
+      screenWidth: "",
     };
+  },
+
+  computed: {
+    imgFoodies01() {
+      console.log(this.screenWidth);
+      if (this.screenWidth >= 768) {
+        return this.imageFoodies01_desktop;
+      } else {
+        return this.imageFoodies01;
+      }
+    },
+  },
+
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.screenWidth = screen.width;
+    });
   },
 };
 </script>
@@ -158,13 +257,12 @@ export default {
   flex-direction: column;
 
   align-items: center;
+  overflow-x: hidden;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 95%;
+  row-gap: 20px;
 }
 </style>
