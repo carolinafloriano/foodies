@@ -64,6 +64,10 @@
       display: none;
     }
 
+    > .title {
+      padding-left: 100px;
+    }
+
     > .menu {
       display: initial;
       padding-right: 70px;

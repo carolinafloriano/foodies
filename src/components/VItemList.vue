@@ -26,7 +26,6 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   row-gap: 10px;
-  margin-left: 20px;
   font-size: 16px;
 
   .item {

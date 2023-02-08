@@ -27,7 +27,6 @@ export default {
   flex-direction: column;
   align-items: center;
   row-gap: 35px;
-  margin-left: 20px;
   margin-top: 20px;
   font-size: 16px;
 

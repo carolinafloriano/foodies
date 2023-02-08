@@ -56,7 +56,6 @@ export default {
 @import "@/assets/styles/variables.scss";
 
 .view-footer {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,7 +123,6 @@ export default {
     display: flex;
     flex-direction: column;
     row-gap: 25px;
-    padding: 30px;
 
     > .title {
       font-weight: 500;
@@ -188,6 +186,7 @@ export default {
 
     > .foodies {
       align-items: baseline;
+      padding: 0;
     }
 
     > .menu {

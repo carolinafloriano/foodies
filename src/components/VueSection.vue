@@ -1,14 +1,19 @@
 <template>
   <section
     class="vue-section"
-    :class="{
-      '-before': imageBefore,
-      '-after': imageAfter,
-      '-backgroundImage': showImageBackground,
-      '-desktopView': desktopView,
-    }"
+    :class="[
+      positionImage,
+      {
+        '-backgroundImage': showImageBackground,
+        '-desktopView': desktopView,
+      },
+    ]"
   >
-    <div class="call-to-action" v-if="showCallToAction">
+    <div
+      class="call-to-action"
+      v-if="showCallToAction"
+      :class="{ '_elements-center': elementsCenter }"
+    >
       <h2 class="subtitle">
         <slot name="subtitle"></slot>
       </h2>
@@ -39,6 +44,7 @@
       :class="{
         '-flex': contentFlex,
         '-chart': contentChart,
+        '-benefits': contentBenefits,
         '-smallImage': contentImage,
       }"
     >
@@ -91,6 +97,15 @@ export default {
       type: Boolean,
       required: false,
     },
+    positionImage: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    elementsCenter: {
+      type: Boolean,
+      required: false,
+    },
     titleLarge: {
       type: Boolean,
       required: false,
@@ -112,6 +127,10 @@ export default {
       required: false,
     },
     contentChart: {
+      type: Boolean,
+      required: false,
+    },
+    contentBenefits: {
       type: Boolean,
       required: false,
     },
@@ -137,7 +156,6 @@ export default {
   justify-content: center;
   text-align: center;
   align-items: center;
-  padding: 25px;
 
   &.-before {
     > .image {
@@ -158,6 +176,8 @@ export default {
     background: url("@/assets/images/others/rectangle.png") center no-repeat;
     background-size: cover;
     padding: 100px 60px;
+    margin-right: -50px;
+    margin-left: -50px;
 
     > .call-to-action {
       > .title {
@@ -196,7 +216,6 @@ export default {
     }
 
     > .description {
-      width: 100%;
       font-weight: 400;
       font-size: 14px;
       line-height: 159.4%;
@@ -209,16 +228,14 @@ export default {
   }
 
   > .image {
+    display: flex;
+    flex-direction: row;
     margin-top: 30px;
     order: 10;
 
-    img {
-      width: 100%;
-    }
-
     &.-small {
-      width: 100%;
       background: #f0f1ec;
+      justify-content: center;
 
       img {
         width: 88%;
@@ -226,21 +243,30 @@ export default {
       }
     }
     &.-medium {
-      width: 88%;
+      max-width: 88%;
     }
     &.-large {
-      width: 100%;
+      > img {
+        max-width: 100%;
+      }
     }
   }
 
   > .content {
+    margin-top: 20px;
+
     &.-flex {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      justify-content: space-around;
       column-gap: 15px;
       row-gap: 40px;
       order: 20;
+
+      > img {
+        max-width: 40%;
+      }
     }
 
     &.-chart {
@@ -254,8 +280,9 @@ export default {
 
   > .divisor {
     width: 100%;
-    margin-top: 35px;
     order: 30;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 }
 
@@ -266,8 +293,17 @@ export default {
       grid-template-columns: 60% 1fr;
       grid-template-rows: auto auto auto;
       gap: 50px;
-      padding: 50px 150px;
+      padding-top: 50px;
+      padding-bottom: 0;
       box-sizing: border-box;
+
+      > .image {
+        grid-row: 2 span;
+      }
+
+      > .divisor {
+        grid-column: 2 span;
+      }
     }
 
     > .call-to-action {
@@ -282,7 +318,8 @@ export default {
     }
 
     &.-backgroundImage {
-      background-size: auto;
+      margin-right: 0;
+      margin-left: 0;
 
       > .call-to-action {
         > .action {
@@ -291,7 +328,7 @@ export default {
       }
     }
 
-    .content {
+    > .content {
       width: 100%;
       box-sizing: border-box;
 
@@ -307,11 +344,16 @@ export default {
         gap: 0;
         justify-content: center;
       }
+
+      &.-benefits {
+        margin-top: -70px;
+      }
     }
 
     &.-before {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       text-align: left;
       gap: 100px;
@@ -341,6 +383,7 @@ export default {
     &.-after {
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       text-align: left;
       gap: 100px;

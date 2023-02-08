@@ -29,7 +29,7 @@
           <img :src="imgLogo03" />
         </template>
       </VueSection>
-      <VueSection show-content show-divisor content-flex>
+      <VueSection show-content show-divisor content-flex content-benefits>
         <template #content>
           <VBenefits>
             <template #icon>local_shipping</template>
@@ -57,8 +57,8 @@
         show-call-to-action
         show-image
         show-description
-        image-before
         small-image
+        position-image="-before"
       >
         <template #subtitle>Our Benefit</template>
         <template #title>The More Healthy Food The Better</template>
@@ -72,8 +72,8 @@
         show-image
         show-description
         show-action
-        image-after
         small-image
+        :position-image="position"
       >
         <template #subtitle>Ours Stars</template>
         <template #title>Veggie Food Goes On And Always On</template>
@@ -85,7 +85,13 @@
           <VButton primary large> Get Special Promo </VButton></template
         >
       </VueSection>
-      <VueSection show-call-to-action show-content content-flex content-chart>
+      <VueSection
+        show-call-to-action
+        show-content
+        content-flex
+        content-chart
+        elements-center
+      >
         <template #subtitle>Ours Features</template>
         <template #title>Variety Of Veggie Foods</template>
         <template #content>
@@ -107,7 +113,7 @@
           </VFeature>
         </template>
       </VueSection>
-      <VueSection show-call-to-action show-content content-flex>
+      <VueSection show-call-to-action show-content content-flex elements-center>
         <template #subtitle>Our Product</template>
         <template #title>Most Popular Product</template>
         <template #content>
@@ -138,7 +144,12 @@
           ></VProduct>
         </template>
       </VueSection>
-      <VueSection show-call-to-action show-action show-image-background>
+      <VueSection
+        show-call-to-action
+        show-action
+        show-image-background
+        elements-center
+      >
         <template #title>Veggie Foods? Ingredients You Want To Try</template>
         <template #action>
           <VButton primary large> Get Started </VButton></template
@@ -167,6 +178,7 @@ import logo3 from "@/assets/images/logos/logo-03.png";
 import foodies_01 from "@/assets/images/foodies/foodies_01.png";
 import foodies_01_desktop from "@/assets/images/foodies/foodies_01_desktop.png";
 import foodies_02 from "@/assets/images/foodies/foodies_02.png";
+import foodies_02_desktop from "@/assets/images/foodies/foodies_02_desktop.png";
 import foodies_03 from "@/assets/images/foodies/foodies_03.png";
 import foodies_04 from "@/assets/images/foodies/foodies_04.png";
 import foodies_05 from "@/assets/images/foodies/foodies_05.png";
@@ -198,7 +210,8 @@ export default {
       imgLogo03: logo3,
       imageFoodies01: foodies_01,
       imageFoodies01_desktop: foodies_01_desktop,
-      imgFoodies02: foodies_02,
+      imageFoodies02: foodies_02,
+      imageFoodies02_desktop: foodies_02_desktop,
       imgFoodies03: foodies_03,
       imgFoodies04: foodies_04,
       imgFoodies05: foodies_05,
@@ -233,9 +246,27 @@ export default {
         return this.imageFoodies01;
       }
     },
+    imgFoodies02() {
+      console.log(this.screenWidth);
+      if (this.screenWidth >= 768) {
+        return this.imageFoodies02_desktop;
+      } else {
+        return this.imageFoodies02;
+      }
+    },
+    position() {
+      console.log(this.screenWidth);
+      if (this.screenWidth >= 768) {
+        return "-after";
+      } else {
+        return "-before";
+      }
+    },
   },
 
   mounted() {
+    this.screenWidth = screen.width;
+
     window.addEventListener("resize", () => {
       this.screenWidth = screen.width;
     });
@@ -258,11 +289,25 @@ export default {
 
   align-items: center;
   overflow-x: hidden;
+
+  > .container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding-right: 50px;
+    padding-left: 50px;
+  }
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
+@media screen and (min-width: 768px) {
+  #app {
+    height: calc(100vh * 4);
+
+    > .container {
+      padding-right: 100px;
+      padding-left: 100px;
+      row-gap: 80px;
+    }
+  }
 }
 </style>
