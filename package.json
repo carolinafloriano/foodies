@@ -1,10 +1,11 @@
 {
   "name": "foodies",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "deploy": "node scripts/gh-pages-deploy.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
