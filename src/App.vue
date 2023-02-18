@@ -288,7 +288,7 @@ export default {
   flex-direction: column;
 
   align-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
 
   > .container {
     display: flex;
