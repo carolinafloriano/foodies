@@ -53,6 +53,7 @@ export default {
   column-gap: 10px;
   border: 0;
   font-size: 16px;
+  cursor: pointer;
 
   &.-primary {
     background-color: map-get($colors, "primary");

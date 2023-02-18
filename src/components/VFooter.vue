@@ -164,6 +164,7 @@ export default {
         font-size: 14px;
         line-height: 17px;
         border: 0;
+        cursor: pointer;
       }
     }
   }
