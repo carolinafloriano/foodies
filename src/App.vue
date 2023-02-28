@@ -283,7 +283,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: calc(100vh * 5);
   display: flex;
   flex-direction: column;
 
@@ -296,13 +295,12 @@ export default {
     row-gap: 20px;
     padding-right: 50px;
     padding-left: 50px;
+    padding-bottom: 50px;
   }
 }
 
 @media screen and (min-width: 768px) {
   #app {
-    height: calc(100vh * 4);
-
     > .container {
       padding-right: 100px;
       padding-left: 100px;
